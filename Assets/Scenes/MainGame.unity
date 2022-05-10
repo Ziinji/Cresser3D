@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.5
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.32200974, g: 0.3594872, b: 0.41740343, a: 0.5}
+  m_IndirectSpecularColor: {r: 0.32200918, g: 0.3594867, b: 0.41740224, a: 0.5}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -120,7 +120,7 @@ NavMeshSettings:
     accuratePlacement: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: cd8fbf3cc043146d098c5daa32747c56, type: 2}
 --- !u!1 &14847672
 GameObject:
   m_ObjectHideFlags: 3
@@ -712,7 +712,7 @@ Terrain:
   m_GameObject: {fileID: 212217913}
   m_Enabled: 1
   serializedVersion: 6
-  m_TerrainData: {fileID: 15600000, guid: bd959b2ce84e0654e966ae521eb5ba17, type: 2}
+  m_TerrainData: {fileID: 0}
   m_TreeDistance: 5000
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
@@ -1526,6 +1526,47 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7f068ad81ed8b54f8d242cbfa862908, type: 3}
+--- !u!1 &837671116 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b7f068ad81ed8b54f8d242cbfa862908,
+    type: 3}
+  m_PrefabInstance: {fileID: 2066016526}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &837671117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 837671116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ac0ee4d55d8f45bb99f924c5c712460, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movePositionTransform: {fileID: 26535352}
+--- !u!195 &837671118
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 837671116}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &894101583
 GameObject:
   m_ObjectHideFlags: 3
@@ -1592,8 +1633,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 894101583}
-  m_LocalRotation: {x: 0.16535008, y: 0.0000000084747525, z: -0.0000000014208591,
-    w: 0.98623496}
+  m_LocalRotation: {x: 0.16535008, y: 0.000000008484768, z: -0.0000000014225382, w: 0.98623496}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1901,7 +1941,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.18977654, y: -0.00072928163, z: 0.0001409602, w: 0.981827}
+  m_LocalRotation: {x: 0.18977651, y: -0.0010376087, z: 0.00020055323, w: 0.9818268}
   m_LocalPosition: {x: 26.48, y: 8.6, z: 9.870001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -2603,7 +2643,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1506613406}
-  m_LocalRotation: {x: 0.18977655, y: -0.000729282, z: 0.00014096231, w: 0.981827}
+  m_LocalRotation: {x: 0.1897765, y: -0.0010376096, z: 0.00020055872, w: 0.9818268}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2833,6 +2873,47 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1592196882}
   m_CullTransparentMesh: 0
+--- !u!1 &1693385935 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b7f068ad81ed8b54f8d242cbfa862908,
+    type: 3}
+  m_PrefabInstance: {fileID: 798982834}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1693385937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1693385935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ac0ee4d55d8f45bb99f924c5c712460, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movePositionTransform: {fileID: 26535352}
+--- !u!195 &1693385938
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1693385935}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &1697792461
 GameObject:
   m_ObjectHideFlags: 0
@@ -3674,7 +3755,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2133168991}
-  m_LocalRotation: {x: 0.20106593, y: 0.000000032639534, z: -0.0000000066995174, w: 0.9795777}
+  m_LocalRotation: {x: 0.2010659, y: -2.074232e-15, z: 1.5168786e-16, w: 0.9795777}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
