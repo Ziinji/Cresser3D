@@ -103,7 +103,7 @@ public class ThirdPersonMovement : MonoBehaviour
             {
 
                 //Make player invuln here
-                controller.Move(moveDir.normalized * speed * 1.2f * Time.deltaTime);
+                controller.Move(moveDir.normalized * speed * 1.6f * Time.deltaTime);
                 isWalking = false;
                 isRunning = true;
 

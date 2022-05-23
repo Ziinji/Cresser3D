@@ -28,9 +28,12 @@ public class EnemyPatrol : MonoBehaviour
     float m_WaitTime;                               //  Variable of the wait time that makes the delay
     float m_TimeToRotate;                           //  Variable of the wait time to rotate when the player is near that makes the delay
     bool m_playerInRange;                           //  If the player is in range of vision, state of chasing
-    bool m_PlayerNear;                              //  If the player is near, state of hearing
+    public bool m_PlayerNear;                              //  If the player is near, state of hearing
     bool m_IsPatrol;                                //  If the enemy is patrol, state of patroling
     bool m_CaughtPlayer;                            //  if the enemy has caught the player
+    bool m_IsMoving;
+
+    public Animator animator;
 
     void Start()
     {
@@ -54,6 +57,16 @@ public class EnemyPatrol : MonoBehaviour
     {
         EnviromentView();                       //  Check whether or not the player is in the enemy's field of vision
 
+        if (m_IsMoving == true)
+        {
+            animator.SetBool("WalkAnim", true);
+        }
+
+        if (m_IsMoving == false)
+        {
+            animator.SetBool("WalkAnim", false);
+        }
+
         if (!m_IsPatrol)
         {
             Chasing();
@@ -64,7 +77,7 @@ public class EnemyPatrol : MonoBehaviour
         }
     }
 
-    private void Chasing()
+    public void Chasing()
     {
         //  The enemy is chasing the player
         m_PlayerNear = false;                       //  Set false that hte player is near beacause the enemy already sees the player
@@ -152,12 +165,14 @@ public class EnemyPatrol : MonoBehaviour
     {
         navMeshAgent.isStopped = true;
         navMeshAgent.speed = 0;
+        m_IsMoving = false;
     }
 
     void Move(float speed)
     {
         navMeshAgent.isStopped = false;
         navMeshAgent.speed = speed;
+        m_IsMoving = true;
     }
 
     void CaughtPlayer()
