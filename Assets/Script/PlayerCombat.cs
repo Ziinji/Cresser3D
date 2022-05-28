@@ -40,15 +40,12 @@ public class PlayerCombat : MonoBehaviour
             {
                 case 1:
                     enemy.GetComponent<EnemyCombat>().TakeDamage(25);
-                    enemy.GetComponent<EnemyPatrol>().Chasing();
                     break;
                 case 2:
                     enemy.GetComponent<EnemyCombat>().TakeDamage(25);
-                    enemy.GetComponent<EnemyPatrol>().Chasing();
                     break;
                 case 3:
                     enemy.GetComponent<EnemyCombat>().TakeDamage(50);
-                    enemy.GetComponent<EnemyPatrol>().Chasing();
                     break;
             }
         }   

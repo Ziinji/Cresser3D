@@ -48,7 +48,7 @@ public class EnemyPatrol : MonoBehaviour
         m_CurrentWaypointIndex = 0;                 //  Set the initial waypoint
         navMeshAgent = GetComponent<NavMeshAgent>();
 
-        navMeshAgent.isStopped = false;
+            navMeshAgent.isStopped = false;
         navMeshAgent.speed = speedWalk;             //  Set the navemesh speed with the normal speed of the enemy
         navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);    //  Set the destination to the first waypoint
     }
@@ -77,7 +77,7 @@ public class EnemyPatrol : MonoBehaviour
         }
     }
 
-    public void Chasing()
+    public   void Chasing()
     {
         //  The enemy is chasing the player
         m_PlayerNear = false;                       //  Set false that hte player is near beacause the enemy already sees the player
