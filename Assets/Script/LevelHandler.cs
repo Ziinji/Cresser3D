@@ -29,13 +29,12 @@ public class LevelHandler : MonoBehaviour
     {
         stage = 1;
         SpawnGoblin(1 + stage);
-        SpawnHeadcutter(1);
     }
 
     private void Update()
     {
-        stageUncleared = stage - 1;
-        stageDisplay.SetText(stageUncleared.ToString());
+        //stageUncleared = stage - 1;
+        stageDisplay.SetText(stage.ToString());
     }
 
     void SpawnGoblin(int numEnemies)
@@ -70,6 +69,7 @@ public class LevelHandler : MonoBehaviour
         PlayerCharacter.transform.position = new Vector3(31.37611f, 3.384f, 11.79501f);
         PlayerCharacter.transform.eulerAngles = new Vector3(0, 0, 0);
         SpawnGoblin(1 + stage);
+        SpawnHeadcutter(stage/3);
 
         PlayerCharacter.GetComponent<PlayerCombat>().currentHealth = 100;
         PlayerHealthBar.SetHealth(100);

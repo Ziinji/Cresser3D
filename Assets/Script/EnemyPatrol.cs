@@ -135,7 +135,7 @@ public class EnemyPatrol : MonoBehaviour
 
     private void Patroling()
     {
-        if (Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) <= 4f)
+        if (Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) <= 3f)
         {
             m_PlayerNear = true;
         } else
@@ -144,7 +144,8 @@ public class EnemyPatrol : MonoBehaviour
         }
         if (m_PlayerNear)
         {
-            transform.Rotate(new Vector3(0, 500, 0) * Time.deltaTime);
+            transform.LookAt(GameObject.FindGameObjectWithTag("Player").transform);
+            //transform.Rotate(new Vector3(0, 500, 0) * Time.deltaTime);
             /*if (m_TimeToRotate <= 0)
             {
                 Move(speedWalk);
