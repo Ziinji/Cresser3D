@@ -21,6 +21,7 @@ public class ThirdPersonMovement : MonoBehaviour
     Vector3 velocity;
 
     public bool isGrounded;
+    public bool canMove = true;
 
     bool isWalking = false;
     bool isRunning = false;
@@ -44,92 +45,104 @@ public class ThirdPersonMovement : MonoBehaviour
     void Update()
     {
 
-
-        //jump
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-
-        if (isGrounded && velocity.y < 0)
+        if (canMove)
         {
-            velocity.y = -10f;
-        }
+            //jump
+            isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
-        {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
-            isJumping = true;
-            animator.SetTrigger("JumpAnim");
-        }
+            if (isGrounded && velocity.y < 0)
+            {
+                velocity.y = -10f;
+            }
 
-        //gravity
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
+            /*if (Input.GetButtonDown("Jump") && isGrounded)
+            {
+                velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
+                isJumping = true;
+                animator.SetTrigger("JumpAnim");
+            }*/
 
-        //walk
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+            //gravity
+            velocity.y += gravity * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
 
-        if (isRunning == true)
-        {
-            animator.SetBool("RunAnim", true);
-        }
+            //walk
+            float horizontal = Input.GetAxisRaw("Horizontal");
+            float vertical = Input.GetAxisRaw("Vertical");
+            Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
-        if (isRunning == false)
-        {
-            animator.SetBool("RunAnim", false);
-        }
+            if (isRunning == true)
+            {
+                animator.SetBool("RunAnim", true);
+            }
 
-        if (isWalking == true)
-        {
-            animator.SetBool("WalkAnim", true);
-        }
+            if (isRunning == false)
+            {
+                animator.SetBool("RunAnim", false);
+            }
 
-        if (isWalking == false)
-        {
-            animator.SetBool("WalkAnim", false);
-        }
+            if (isWalking == true)
+            {
+                animator.SetBool("WalkAnim", true);
+            }
+
+            if (isWalking == false)
+            {
+                animator.SetBool("WalkAnim", false);
+            }
 
 
-        if (direction.magnitude >= 0.1f)
-        {
-
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
-            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (direction.magnitude >= 0.1f)
             {
 
-                //Make player invuln here
-                controller.Move(moveDir.normalized * speed * 1.6f * Time.deltaTime);
-                isWalking = false;
-                isRunning = true;
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+                Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+
+                    //Make player invuln here
+                    controller.Move(moveDir.normalized * speed * 1.6f * Time.deltaTime);
+                    isWalking = false;
+                    isRunning = true;
+
+                }
+                else
+                {
+                    //direction.x = cam.transform.position.x;
+                    controller.Move(moveDir.normalized * speed * Time.deltaTime);
+                    isRunning = false;
+                    isWalking = true;
+
+                }
+
+                if (Input.GetKeyDown(KeyCode.LeftShift) && isGrounded)
+                {
+                    isRolling = true;
+                    controller.Move(moveDir.normalized * speed * 2.4f * Time.deltaTime);
+                    animator.SetTrigger("RollAnim");
+                }
 
             }
             else
             {
-                //direction.x = cam.transform.position.x;
-                controller.Move(moveDir.normalized * speed * Time.deltaTime);
                 isRunning = false;
-                isWalking = true;
-
+                isWalking = false;
             }
-
-            if (Input.GetKeyDown(KeyCode.LeftShift) && isGrounded)
-            {
-                isRolling = true;
-                controller.Move(moveDir.normalized * speed * 2.4f * Time.deltaTime);
-                animator.SetTrigger("RollAnim");
-            }
-
-        }
-        else
-        {
-            isRunning = false;
-            isWalking = false;
         }
 
+    }
+
+    public void enableMove()
+    {
+        canMove = true;
+    }
+
+    public void disableMove()
+    {
+        canMove = false;
     }
 }

@@ -2,17 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-public class EnemyPatrol : MonoBehaviour
+public class OldEnemyPatrol : MonoBehaviour
 {
-    public CharacterController characterController;
-
-    public float gravity = -9.81f;
-    Vector3 velocity;
-
-    // Attack Handler
-    public float attackRate = 1.5f;
-    public float nextAttack;
-
     public NavMeshAgent navMeshAgent;               //  Nav mesh agent component
     public float startWaitTime = 4;                 //  Wait time of every action
     public float timeToRotate = 2;                  //  Wait time when the enemy detect near the player without seeing
@@ -37,16 +28,12 @@ public class EnemyPatrol : MonoBehaviour
     float m_WaitTime;                               //  Variable of the wait time that makes the delay
     float m_TimeToRotate;                           //  Variable of the wait time to rotate when the player is near that makes the delay
     bool m_playerInRange;                           //  If the player is in range of vision, state of chasing
-    public bool m_PlayerNear;                              //  If the player is near, state of hearing
-    public bool m_IsPatrol;                                //  If the enemy is patrol, state of patroling
+    bool m_PlayerNear;                              //  If the player is near, state of hearing
+    bool m_IsPatrol;                                //  If the enemy is patrol, state of patroling
     bool m_CaughtPlayer;                            //  if the enemy has caught the player
-    bool m_IsMoving;
-
-    public Animator animator;
 
     void Start()
     {
-
         m_PlayerPosition = Vector3.zero;
         m_IsPatrol = true;
         m_CaughtPlayer = false;
@@ -56,8 +43,6 @@ public class EnemyPatrol : MonoBehaviour
         m_TimeToRotate = timeToRotate;
 
         m_CurrentWaypointIndex = 0;                 //  Set the initial waypoint
-
-        characterController = GetComponent<CharacterController>();
         navMeshAgent = GetComponent<NavMeshAgent>();
 
         navMeshAgent.isStopped = false;
@@ -69,19 +54,6 @@ public class EnemyPatrol : MonoBehaviour
     {
         EnviromentView();                       //  Check whether or not the player is in the enemy's field of vision
 
-        velocity.y += gravity * Time.deltaTime;
-        characterController.Move(velocity * Time.deltaTime);
-
-        if (m_IsMoving == true)
-        {
-            animator.SetBool("WalkAnim", true);
-        }
-
-        if (m_IsMoving == false)
-        {
-            animator.SetBool("WalkAnim", false);
-        }
-
         if (!m_IsPatrol)
         {
             Chasing();
@@ -92,10 +64,10 @@ public class EnemyPatrol : MonoBehaviour
         }
     }
 
-    public void Chasing()
+    private void Chasing()
     {
         //  The enemy is chasing the player
-        m_PlayerNear = false;                       //  Set false that the player is near beacause the enemy already sees the player
+        m_PlayerNear = false;                       //  Set false that hte player is near beacause the enemy already sees the player
         playerLastPosition = Vector3.zero;          //  Reset the player near position
 
         if (!m_CaughtPlayer)
@@ -105,7 +77,6 @@ public class EnemyPatrol : MonoBehaviour
         }
         if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)    //  Control if the enemy arrive to the player location
         {
-            m_IsMoving = false;
             if (m_WaitTime <= 0 && !m_CaughtPlayer && Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) >= 6f)
             {
                 //  Check if the enemy is not near to the player, returns to patrol after the wait time delay
@@ -118,16 +89,9 @@ public class EnemyPatrol : MonoBehaviour
             }
             else
             {
-                if (Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) >= 10f)
-                //  Wait if the current position is not the player position
-                {
+                if (Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) >= 2.5f)
+                    //  Wait if the current position is not the player position
                     Stop();
-                }
-                if (Time.time > nextAttack)
-                {
-                    nextAttack = Time.time + attackRate;
-                    GetComponent<EnemyCombat>().AttackAnim();
-                }
                 m_WaitTime -= Time.deltaTime;
             }
         }
@@ -135,17 +99,10 @@ public class EnemyPatrol : MonoBehaviour
 
     private void Patroling()
     {
-        if (Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) <= 2f)
-        {
-            m_PlayerNear = true;
-        } else
-        {
-            m_PlayerNear = false;
-        }
         if (m_PlayerNear)
         {
-            transform.Rotate(new Vector3(0, 500, 0) * Time.deltaTime);
-            /*if (m_TimeToRotate <= 0)
+            //  Check if the enemy detect near the player, so the enemy will move to that position
+            if (m_TimeToRotate <= 0)
             {
                 Move(speedWalk);
                 LookingPlayer(playerLastPosition);
@@ -155,11 +112,11 @@ public class EnemyPatrol : MonoBehaviour
                 //  The enemy wait for a moment and then go to the last player position
                 Stop();
                 m_TimeToRotate -= Time.deltaTime;
-            }*/
+            }
         }
         else
         {
-            m_PlayerNear = false;           //  The player is no near when the enemy is patroling
+            m_PlayerNear = false;           //  The player is no near when the enemy is platroling
             playerLastPosition = Vector3.zero;
             navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);    //  Set the enemy destination to the next waypoint
             if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
@@ -193,28 +150,14 @@ public class EnemyPatrol : MonoBehaviour
 
     void Stop()
     {
-        m_IsMoving = false;
         navMeshAgent.isStopped = true;
         navMeshAgent.speed = 0;
     }
 
     void Move(float speed)
     {
-
-        navMeshAgent.updatePosition = false;
-        navMeshAgent.updateRotation = false;
-
-        Vector3 lookPos = m_PlayerPosition - transform.position;
-        lookPos.y = 0;
-        Quaternion targetRot = Quaternion.LookRotation(lookPos);
-        transform.rotation = targetRot;
-
-        characterController.Move(navMeshAgent.desiredVelocity * Time.deltaTime);
-        navMeshAgent.velocity = characterController.velocity;
-
         navMeshAgent.isStopped = false;
         navMeshAgent.speed = speed;
-        m_IsMoving = true;
     }
 
     void CaughtPlayer()
@@ -256,7 +199,7 @@ public class EnemyPatrol : MonoBehaviour
                 float dstToPlayer = Vector3.Distance(transform.position, player.position);          //  Distance of the enmy and the player
                 if (!Physics.Raycast(transform.position, dirToPlayer, dstToPlayer, obstacleMask))
                 {
-                    m_playerInRange = true;             //  The player has been seeing by the enemy and then the rnemy starts to chase the player
+                    m_playerInRange = true;             //  The player has been seeing by the enemy and then the nemy starts to chasing the player
                     m_IsPatrol = false;                 //  Change the state to chasing the player
                 }
                 else
@@ -283,11 +226,5 @@ public class EnemyPatrol : MonoBehaviour
                 m_PlayerPosition = player.transform.position;       //  Save the player's current position if the player is in range of vision
             }
         }
-    }
-    void OnDrawGizmosSelected()
-    {
-        // Draw a yellow sphere at the transform's position
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(navMeshAgent.nextPosition, navMeshAgent.stoppingDistance);
     }
 }

@@ -6,7 +6,12 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     public static bool GameIsPaused = false;
+
     public GameObject pauseMenuUI;
+    public GameObject howToPlayUI;
+    public GameObject StageClearUI;
+    public GameObject StageLoseUI;
+    public GameObject playerCharacter;
 
     // Start is called before the first frame update
     void Start()
@@ -25,12 +30,28 @@ public class PauseMenu : MonoBehaviour
             if(GameIsPaused)
             {
                 Resume();
+                howToPlayUI.SetActive(false);
             } else
             {
                 Pause();
+                pauseMenuUI.SetActive(true);
+                playerCharacter.GetComponent<CharacterController>().enabled = false;
             }
         }
-        
+
+        if (GameObject.FindGameObjectsWithTag("Enemy").Length <= 0)
+        {
+            Pause();
+            StageClearUI.SetActive(true);
+
+        }
+
+        if (GameObject.FindGameObjectsWithTag("Player").Length <= 0)
+        {
+            Pause();
+            StageLoseUI.SetActive(true);
+
+        }
     }
 
     public void Resume ()
@@ -39,11 +60,11 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         GameIsPaused = false;
         Cursor.lockState = CursorLockMode.Locked;
+        playerCharacter.GetComponent<CharacterController>().enabled = true;
     }
 
     void Pause ()
     {
-        pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
         Cursor.lockState = CursorLockMode.None;
@@ -56,5 +77,10 @@ public class PauseMenu : MonoBehaviour
     public void Quit()
     {
         Application.Quit();
+    }
+    public void stageChange()
+    {
+        Resume();
+        StageClearUI.SetActive(false);
     }
 }

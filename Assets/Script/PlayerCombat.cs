@@ -11,15 +11,25 @@ public class PlayerCombat : MonoBehaviour
     public LayerMask enemyLayer;
 
     public Animator animator;
-    bool comboPossible;
+    public HealthBar healthBar;
+
     public int comboStep;
+
+    bool comboPossible;
     bool inputHeavy;
+    bool canAttack;
+    public bool canBeHit;
+
+    public int maxHealth = 100;
+    public int currentHealth;
 
     public int attackDamage = 25;
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        currentHealth = maxHealth;
+        canAttack = true;
     }
 
     // Update is called once per frame
@@ -27,7 +37,10 @@ public class PlayerCombat : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && playerMove.isGrounded)
         {
-            Attack();
+            if (canAttack) 
+            {
+                Attack();
+            }
         }
     }
 
@@ -42,10 +55,10 @@ public class PlayerCombat : MonoBehaviour
                     enemy.GetComponent<EnemyCombat>().TakeDamage(25);
                     break;
                 case 2:
-                    enemy.GetComponent<EnemyCombat>().TakeDamage(25);
+                    enemy.GetComponent<EnemyCombat>().TakeDamage(35);
                     break;
                 case 3:
-                    enemy.GetComponent<EnemyCombat>().TakeDamage(50);
+                    enemy.GetComponent<EnemyCombat>().TakeDamage(40);
                     break;
             }
         }   
@@ -104,6 +117,29 @@ public class PlayerCombat : MonoBehaviour
         comboStep = 0;
     }
 
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        animator.SetTrigger("Hurt");
+        healthBar.SetHealth(currentHealth);
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+    void Die()
+    {
+        gameObject.tag = "Dead";
+        animator.SetBool("isDead", true);
+
+        this.enabled = false;
+        GetComponent<MeshCollider>().enabled = false;
+        GetComponent<EnemyPatrol>().enabled = false;
+        GetComponent<EnemyCombat>().enabled = false;
+        GetComponent<CharacterController>().enabled = false;
+        GetComponent<ThirdPersonMovement>().enabled = false;
+    }
+
     void NormalAttack()
     {
         if(comboStep == 0)
@@ -120,5 +156,25 @@ public class PlayerCombat : MonoBehaviour
                 comboStep += 1;
             }
         }
+    }
+
+    public void enableAttack()
+    {
+        canAttack = true;
+    }
+
+    public void disableAttack()
+    {
+        canAttack = false;
+    }
+
+    void RollStart()
+    {
+        canBeHit = false;
+    }
+
+    void RollEnd()
+    {
+        canBeHit = true;
     }
 }

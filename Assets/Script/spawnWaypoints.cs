@@ -8,10 +8,6 @@ public class spawnWaypoints : MonoBehaviour
     public GameObject wayOne, wayTwo, wayThree;
     public float Radius = 1;
     // Start is called before the first frame update
-    void Start()
-    {
-        RandomWaypoints();
-    }
 
     void RandomWaypoints()
     {
