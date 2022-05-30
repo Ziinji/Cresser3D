@@ -652,9 +652,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1ea530f6720e31449b3cb3a8afa550b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMixer: {fileID: 24100000, guid: ff94f9e8a690f254883a8317a2706d33, type: 2}
+  musicMixer: {fileID: 24100000, guid: ff94f9e8a690f254883a8317a2706d33, type: 2}
+  effectsMixer: {fileID: 24100000, guid: f62cb8d3f838e8e408d50291e9dfd250, type: 2}
   resolutionDropdown: {fileID: 153877012}
-  music: {fileID: 1160688377}
 --- !u!1 &236654696
 GameObject:
   m_ObjectHideFlags: 0
@@ -3222,7 +3222,7 @@ GameObject:
   - component: {fileID: 1043412202}
   - component: {fileID: 1043412201}
   m_Layer: 5
-  m_Name: BackCredits
+  m_Name: BackSettings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3297,6 +3297,17 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 198768775}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6446,7 +6457,7 @@ MonoBehaviour:
   m_MinValue: 0.001
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:

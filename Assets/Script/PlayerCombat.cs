@@ -24,6 +24,11 @@ public class PlayerCombat : MonoBehaviour
     public int currentHealth;
 
     public int attackDamage = 25;
+
+    public AudioSource hit1;
+    public AudioSource hit2;
+    public AudioSource hit3;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -106,9 +111,14 @@ public class PlayerCombat : MonoBehaviour
     public void Combo()
     {
         if (comboStep == 2)
+        { 
             animator.Play("light2");
+        }
+
         if (comboStep == 3)
+        {
             animator.Play("light3");
+        }
     }
 
     public void ResetCombo()
@@ -176,5 +186,20 @@ public class PlayerCombat : MonoBehaviour
     void RollEnd()
     {
         canBeHit = true;
+    }
+
+    void soundEffectOne()
+    {
+        hit1.Play();
+    }
+
+    void soundEffectTwo()
+    {
+        hit2.Play();
+    }
+
+    void soundEffectThree()
+    {
+        hit3.Play();
     }
 }

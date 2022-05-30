@@ -11,7 +11,9 @@ public class EnemyCombat : MonoBehaviour
     public float enemyAttackRange;
     public LayerMask playerLayer;
 
+    public int damage;
     public int maxHealth = 100;
+    public AudioSource attackEffect;
     int currentHealth;
 
     // Start is called before the first frame update
@@ -39,7 +41,8 @@ public class EnemyCombat : MonoBehaviour
         {
             if (player.GetComponent<PlayerCombat>().canBeHit)
             {
-                player.GetComponent<PlayerCombat>().TakeDamage(10);
+                player.GetComponent<PlayerCombat>().TakeDamage(damage);
+                attackEffect.Play();
             }
         }
     }

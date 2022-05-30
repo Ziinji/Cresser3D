@@ -135,7 +135,7 @@ public class EnemyPatrol : MonoBehaviour
 
     private void Patroling()
     {
-        if (Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) <= 2f)
+        if (Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) <= 4f)
         {
             m_PlayerNear = true;
         } else

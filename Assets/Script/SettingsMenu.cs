@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
-    public AudioMixer audioMixer;
+    public AudioMixer musicMixer;
+    public AudioMixer effectsMixer;
     public TMPro.TMP_Dropdown resolutionDropdown;
-    public AudioSource music;
     Resolution[] resolutions;
 
     void Start()
@@ -43,12 +43,12 @@ public class SettingsMenu : MonoBehaviour
 
     public void SetMusic (float sliderValue)
     {
-        audioMixer.SetFloat("Music", Mathf.Log10 (sliderValue) * 20);
+        musicMixer.SetFloat("Music", Mathf.Log10 (sliderValue) * 20);
     }
 
     public void SetEffects(float sliderValue)
     {
-        audioMixer.SetFloat("Effects", Mathf.Log10(sliderValue) * 20);
+        effectsMixer.SetFloat("Effects", Mathf.Log10(sliderValue) * 20);
     }
 
     public void SetFullscreen (bool isFullscreen)

@@ -12,6 +12,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject StageClearUI;
     public GameObject StageLoseUI;
     public GameObject playerCharacter;
+    public AudioSource buttonClick;
 
     // Start is called before the first frame update
     void Start()
@@ -29,13 +30,15 @@ public class PauseMenu : MonoBehaviour
         {
             if(GameIsPaused)
             {
+                playerCharacter.GetComponent<PlayerCombat>().enableAttack();
                 Resume();
                 howToPlayUI.SetActive(false);
             } else
             {
+                playerCharacter.GetComponent<PlayerCombat>().disableAttack();
+                playerCharacter.GetComponent<CharacterController>().enabled = false;
                 Pause();
                 pauseMenuUI.SetActive(true);
-                playerCharacter.GetComponent<CharacterController>().enabled = false;
             }
         }
 
@@ -60,6 +63,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         GameIsPaused = false;
         Cursor.lockState = CursorLockMode.Locked;
+        playerCharacter.GetComponent<PlayerCombat>().enableAttack();
         playerCharacter.GetComponent<CharacterController>().enabled = true;
     }
 
@@ -82,5 +86,10 @@ public class PauseMenu : MonoBehaviour
     {
         Resume();
         StageClearUI.SetActive(false);
+    }
+
+    public void buttonSFX()
+    {
+        buttonClick.Play();
     }
 }

@@ -7,6 +7,7 @@ public class LevelHandler : MonoBehaviour
 {
     // Players and enemies
     public GameObject GoblinPrefab;
+    public GameObject HeadcutterPrefab;
     public GameObject PlayerCharacter;
 
     public GameObject spawnPoint;
@@ -28,6 +29,7 @@ public class LevelHandler : MonoBehaviour
     {
         stage = 1;
         SpawnGoblin(1 + stage);
+        SpawnHeadcutter(1);
     }
 
     private void Update()
@@ -45,6 +47,19 @@ public class LevelHandler : MonoBehaviour
             toCircle = new Vector3(toCircle.x, 0, toCircle.y);
             Vector3 randomPos = spawnPoint.transform.position + toCircle * Radius;
             Instantiate(GoblinPrefab, randomPos, Quaternion.identity);
+            //RandomWaypoints(randomPos);
+        }
+    }
+
+    void SpawnHeadcutter(int numEnemies)
+    {
+        //Vector2 spawnVector = new Vector2(spawnPoint.transform.position.x, spawnPoint.transform.position.z);
+        for (int i = 0; i < numEnemies; i++)
+        {
+            Vector3 toCircle = Random.insideUnitCircle;
+            toCircle = new Vector3(toCircle.x, 0, toCircle.y);
+            Vector3 randomPos = spawnPoint.transform.position + toCircle * Radius;
+            Instantiate(HeadcutterPrefab, randomPos, Quaternion.identity);
             //RandomWaypoints(randomPos);
         }
     }
