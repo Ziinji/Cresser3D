@@ -27,8 +27,10 @@ public class LevelHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        stage = 1;
+        stage = StageMenu.stage;
         SpawnGoblin(1 + stage);
+        SpawnHeadcutter(stage/3);
+        Debug.Log(StageMenu.stage);
     }
 
     private void Update()
